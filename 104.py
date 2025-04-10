@@ -60,4 +60,11 @@ def pipeline(lat=38.9, lon=-77.0):
 
 
 if __name__ == "__main__":
-    pipeline(lat=38.9, lon=-77.0)
+    pipeline.from_source(
+        source="https://github.com/wenlilearn/prefect-work-pools.git",
+        entrypoint="104.py:pipeline"
+    ).deploy(
+        name="test-pipeline",
+        work_pool_name="Test",
+        parameters={"lat": 40.7, "lon": -73.9},
+    )
