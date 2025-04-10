@@ -10,11 +10,9 @@ import httpx
 from prefect import flow, task, runtime
 from prefect.variables import Variable
 from prefect.logging import get_run_logger
-from prefect.cache_policies import INPUTS
-from prefect.artifacts import create_markdown_artifact
 
 
-@task(log_prints=True, persist_result=True, cache_policy=INPUTS)
+@task(log_prints=True)
 def fetch_weather(lat: float = 38.9, lon: float = -77.0):
     """
     Fetches the weather forecast for a given latitude and longitude.
@@ -34,7 +32,7 @@ def fetch_weather(lat: float = 38.9, lon: float = -77.0):
     return forecasted_temp
 
 
-@task
+@task(log_prints=True)
 def save_weather(temp):
     logger = get_run_logger()
     logger.info(f'The current flow_run_id is: {runtime.flow_run.name}')
@@ -64,6 +62,6 @@ if __name__ == "__main__":
         source="https://github.com/wenlilearn/prefect-work-pools.git",
         entrypoint="104.py:pipeline"
     ).deploy(
-        name="test-pipeline",
+        name="test-pipeline-1",
         work_pool_name="Test"
     )
