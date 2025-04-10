@@ -63,5 +63,6 @@ if __name__ == "__main__":
         entrypoint="104.py:pipeline"
     ).deploy(
         name="test-pipeline-1",
-        work_pool_name="Test"
+        work_pool_name="Test",
+        parameters={"lat": 20, "lon": -80},
     )
